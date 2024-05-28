@@ -1,0 +1,20 @@
+1  wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    2  rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+    3  dnf install java-17-amazon-corretto -y
+    4  yum install jenkins -y
+    5  systemctl enable jenkins
+    6  systemctl start jenkins
+    7  cat /var/lib/jenkins/secrets/initialAdminPassword
+    8  whereis java
+    9  which java
+   10  yum install git -y
+   11  cd /var
+   12  ls
+   13  cd /lib
+   14  cd /jenkins
+   15  ls
+   16  cd /var/lib/jenkins/workspace
+   17  ls
+   18  cd gitpullcode/
+   19  ls
+reference: https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/
