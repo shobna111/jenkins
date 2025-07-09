@@ -1,28 +1,40 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
+
+    environment {
+        JAVA_HOME = "/usr/lib/jvm/java-17-amazon-corretto"
+        PATH = "${JAVA_HOME}/bin:${PATH}"
     }
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                git 'https://github.com/shobna111/your-java-repo.git'
             }
         }
-        stage('Test') {
+
+        stage('Compile') {
             steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+                sh '''
+                    mkdir -p out
+                    javac -d out src/*.java
+                '''
             }
         }
-        stage('Deliver') { 
+
+        stage('Run') {
             steps {
-                sh './jenkins/scripts/deliver.sh' 
+                sh 'java -cp out Main'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and run completed successfully.'
+        }
+        failure {
+            echo 'Something went wrong.'
         }
     }
 }
